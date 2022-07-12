@@ -17,12 +17,12 @@ import {
   toDevanagariDigits,
 } from './calendarFunction';
 const activeDate = new Date();
-
 const CalendarView = ({
   onMonthChange,
   onDateChange,
   onDayLongPress,
-  markedDates,
+  devanagariDigits=false,
+  markedDates = [],
 }) => {
   const [activeBSDate, setActiveBSDate] = useState(
     convertADtoBS(
@@ -196,7 +196,7 @@ const CalendarView = ({
           style={styles.monthContainer}>
           <Text style={styles.monthStyle}>
             {CalanderData.bsMonths[activeBSDate.bsMonth - 1]} -{' '}
-            {toDevanagariDigits(activeBSDate.bsYear)}
+            {devanagariDigits?toDevanagariDigits(activeBSDate.bsYear):activeBSDate.bsYear}
             {/* <Icon name="caretdown" /> */}
           </Text>
         </TouchableOpacity>
@@ -278,7 +278,7 @@ const CalendarView = ({
                   color: selectedDate == item ? '#fff' : '#000',
                   fontSize: 15,
                 }}>
-                {toDevanagariDigits(item)}
+                {devanagariDigits?toDevanagariDigits(item):item}
               </Text>
               {selectedDate != item &&
                 markedDates[

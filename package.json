@@ -1,6 +1,6 @@
 {
   "name": "react-native-nepali-calendar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "calendar",
     "nepalicalendar"
   ],
-  "author": "kushal shrestha",
+  "author": "Kushal Shrestha <rockushal3@gmail.com> (http://kushalstha.com.np)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kushalshrestha2053/react-native-nepali-calendar/issues"
