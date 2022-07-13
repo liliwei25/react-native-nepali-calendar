@@ -2,14 +2,14 @@
 
 React native library for nepali calendar. Also it helps to convert AD date to BS date.
 
-# Instrallation
+# Installation
 
 ```npm install react-native-nepali-calendar```
-# pacakge Required
+# Package Required
 
-It require react-native-vector-icon and moment
+It require react-native-vector-icons and moment
 
-```npm install react-native-vector-icon moment```
+```npm install react-native-vector-icons moment```
 
 # Usage
 
@@ -17,7 +17,7 @@ For Nepali Calendar
 
 ```js
 import NepaliCalendar from 'react-native-nepali-calendar'
- <CalendarView
+ <NepaliCalendar
         onMonthChange={month => {
           console.log(month)
         }}
