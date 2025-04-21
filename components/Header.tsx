@@ -50,13 +50,14 @@ export const Header = ({ onMonthChange, selectedMonth, setSelectedDate }: Header
             onMonthChange(new NepaliDate(selectedMonth.getYear(), item.value, selectedMonth.getDate()))
           }
         />
+        <Text> - </Text>
         <Dropdown
           data={YEAR_OPTIONS}
           search
           maxHeight={300}
           labelField="label"
           valueField="value"
-          value={selectedMonth.getYear()}
+          value={selectedMonth.getYear().toString()}
           onChange={(item) =>
             onMonthChange(new NepaliDate(item.value, selectedMonth.getMonth(), selectedMonth.getDate()))
           }
@@ -82,6 +83,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   monthContainer: {
+    flexDirection: 'row',
     width: '50%',
   },
   headerButtonContainer: {
