@@ -67,7 +67,7 @@ export const Calendar = ({
   }, [])
 
   return (
-    <CalendarContext value={{ locale }}>
+    <CalendarContext.Provider value={{ locale }}>
       <View style={styles.container}>
         <Header
           selectedMonth={selectedMonth}
@@ -89,7 +89,7 @@ export const Calendar = ({
           onMonthChange={onMonthChange}
         />
       </View>
-    </CalendarContext>
+    </CalendarContext.Provider>
   )
 }
 
