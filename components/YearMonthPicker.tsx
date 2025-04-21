@@ -36,6 +36,7 @@ export const YearMonthPicker = ({ visible, onClose, selectedDate, onMonthChange 
           </View>
           <FlatList
             data={SUPPORTED_YEARS}
+            numColumns={3}
             renderItem={({ item }) => {
               const isSelected = selectedYear.toString() === item
 
@@ -51,6 +52,7 @@ export const YearMonthPicker = ({ visible, onClose, selectedDate, onMonthChange 
           />
           <FlatList
             data={NEPALI_MONTHS}
+            numColumns={3}
             renderItem={({ item, index }) => {
               const isSelected = NEPALI_MONTHS[selectedMonth] === item
 

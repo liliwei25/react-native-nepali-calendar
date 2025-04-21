@@ -9,6 +9,7 @@ import { Header } from './Header'
 import { DaysRow } from './DaysRow'
 import { daysInWeek } from 'date-fns/constants'
 import { YearMonthPicker } from './YearMonthPicker'
+import { startOfDay } from 'date-fns'
 
 export type CalendarProps = {
   defaultDate?: NepaliDate
@@ -25,9 +26,9 @@ export const Calendar = ({
   onDateChange: onDateChangeProp,
   onDayLongPress,
 }: CalendarProps) => {
-  const [selectedDate, setSelectedDate] = useState(defaultDate ?? NepaliDate.fromAD(new Date()))
+  const [selectedDate, setSelectedDate] = useState(defaultDate ?? NepaliDate.fromAD(startOfDay(new Date())))
   const [selectedMonth, setSelectedMonth] = useState(selectedDate)
-  const [dates, setDates] = useState<(NepaliDate | null)[]>([])
+  const [dates, setDates] = useState<(NepaliDate | null)[]>(getMonthDays(selectedDate))
   const [showYearPicker, setShowYearPicker] = useState(false)
 
   const onDateChange = useCallback(
@@ -42,7 +43,12 @@ export const Calendar = ({
   const renderItem = useCallback<ListRenderItem<NepaliDate | null>>(
     ({ item }) =>
       item ? (
-        <DateCell date={item} onLongPress={onDayLongPress} onPress={onDateChange} isSelected={selectedDate === item} />
+        <DateCell
+          date={item}
+          onLongPress={onDayLongPress}
+          onPress={onDateChange}
+          isSelected={selectedDate.valueOf() === item.valueOf()}
+        />
       ) : (
         <PlaceholderCell />
       ),
