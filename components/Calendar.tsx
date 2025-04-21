@@ -8,7 +8,6 @@ import { CalendarContext } from '../contexts/CalendarContext'
 import { Header } from './Header'
 import { DaysRow } from './DaysRow'
 import { daysInWeek } from 'date-fns/constants'
-import { YearMonthPicker } from './YearMonthPicker'
 import { startOfDay } from 'date-fns'
 
 export type CalendarProps = {
@@ -29,7 +28,6 @@ export const Calendar = ({
   const [selectedDate, setSelectedDate] = useState(defaultDate ?? NepaliDate.fromAD(startOfDay(new Date())))
   const [selectedMonth, setSelectedMonth] = useState(selectedDate)
   const [dates, setDates] = useState<(NepaliDate | null)[]>(getMonthDays(selectedDate))
-  const [showYearPicker, setShowYearPicker] = useState(false)
 
   const onDateChange = useCallback(
     (date: NepaliDate) => {
@@ -64,35 +62,16 @@ export const Calendar = ({
     [onMonthChangeProp],
   )
 
-  const onMonthPress = useCallback(() => {
-    setShowYearPicker(true)
-  }, [])
-
-  const closeYearPicker = useCallback(() => {
-    setShowYearPicker(false)
-  }, [])
-
   return (
     <CalendarContext.Provider value={{ locale }}>
       <View style={styles.container}>
-        <Header
-          selectedMonth={selectedMonth}
-          setSelectedDate={onDateChange}
-          onMonthChange={onMonthChange}
-          onMonthPress={onMonthPress}
-        />
+        <Header selectedMonth={selectedMonth} setSelectedDate={onDateChange} onMonthChange={onMonthChange} />
         <DaysRow />
         <FlatList
           columnWrapperStyle={styles.listColumnWrapper}
           data={dates}
           renderItem={renderItem}
           numColumns={daysInWeek}
-        />
-        <YearMonthPicker
-          visible={showYearPicker}
-          onClose={closeYearPicker}
-          selectedDate={selectedDate}
-          onMonthChange={onMonthChange}
         />
       </View>
     </CalendarContext.Provider>

@@ -5,15 +5,20 @@ import { useCallback, useMemo } from 'react'
 import { add, startOfToday } from 'date-fns'
 import { useCalendarContext } from '../contexts/CalendarContext'
 import { TRANSLATIONS } from '../constants/translations'
+import { Dropdown } from 'react-native-element-dropdown'
+import { NEPALI_MONTHS, SUPPORTED_YEARS } from '../constants/nepaliDate'
+
+const MONTH_OPTIONS = NEPALI_MONTHS.map((month, i) => ({ value: i, label: month }))
+
+const YEAR_OPTIONS = SUPPORTED_YEARS.map((year) => ({ value: year, label: year }))
 
 export type HeaderProps = {
   selectedMonth: NepaliDate
   setSelectedDate: (activeBSDate: NepaliDate) => void
   onMonthChange: (activeMonth: NepaliDate) => void
-  onMonthPress: () => void
 }
 
-export const Header = ({ onMonthChange, selectedMonth, setSelectedDate, onMonthPress }: HeaderProps) => {
+export const Header = ({ onMonthChange, selectedMonth, setSelectedDate }: HeaderProps) => {
   const { locale } = useCalendarContext()
 
   const changeMonth = useCallback(
@@ -26,15 +31,37 @@ export const Header = ({ onMonthChange, selectedMonth, setSelectedDate, onMonthP
   const onTodayPress = useCallback(() => {
     const currentDate = NepaliDate.fromAD(startOfToday())
     setSelectedDate(currentDate)
+    onMonthChange(currentDate)
   }, [setSelectedDate])
 
   const todayTranslation = useMemo(() => TRANSLATIONS[locale].today, [locale])
 
   return (
     <View style={styles.header}>
-      <TouchableOpacity onPress={onMonthPress} style={styles.monthContainer}>
-        <Text style={styles.monthStyle}>{selectedMonth.format('MMMM - YYYY', locale)}</Text>
-      </TouchableOpacity>
+      <View style={styles.monthContainer}>
+        <Dropdown
+          data={MONTH_OPTIONS}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          value={selectedMonth.getMonth()}
+          onChange={(item) =>
+            onMonthChange(new NepaliDate(selectedMonth.getYear(), item.value, selectedMonth.getDate()))
+          }
+        />
+        <Dropdown
+          data={YEAR_OPTIONS}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          value={selectedMonth.getYear()}
+          onChange={(item) =>
+            onMonthChange(new NepaliDate(item.value, selectedMonth.getMonth(), selectedMonth.getDate()))
+          }
+        />
+      </View>
       <View style={styles.headerButtonContainer}>
         <TouchableOpacity onPress={onTodayPress} style={styles.headerButton}>
           <Text>{todayTranslation}</Text>
