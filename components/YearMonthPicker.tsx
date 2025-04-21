@@ -31,10 +31,11 @@ export const YearMonthPicker = ({ visible, onClose, selectedDate, onMonthChange 
         <View style={styles.modalView}>
           <View style={styles.row}>
             <TouchableOpacity onPress={onClose}>
-              <Text>x</Text>
+              <Icon name="close" size={20} />
             </TouchableOpacity>
           </View>
           <FlatList
+            columnWrapperStyle={styles.listColumnWrapper}
             data={SUPPORTED_YEARS}
             numColumns={3}
             renderItem={({ item }) => {
@@ -51,6 +52,7 @@ export const YearMonthPicker = ({ visible, onClose, selectedDate, onMonthChange 
             }}
           />
           <FlatList
+            columnWrapperStyle={styles.listColumnWrapper}
             data={NEPALI_MONTHS}
             numColumns={3}
             renderItem={({ item, index }) => {
@@ -105,4 +107,5 @@ const styles = StyleSheet.create({
   unselectedText: { color: '#000' },
   selectedContainer: { backgroundColor: '#3498db' },
   unselectedContainer: { backgroundColor: '#fff' },
+  listColumnWrapper: { justifyContent: 'space-between' },
 })

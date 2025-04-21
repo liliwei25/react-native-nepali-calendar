@@ -1,23 +1,22 @@
 import NepaliDate, { dateConfigMap } from 'nepali-date-converter'
 import { NEPALI_MONTHS } from '../constants/nepaliDate'
-import { add, startOfMonth } from 'date-fns'
 import { daysInWeek } from 'date-fns/constants'
 
-export const getMonthDays = (month: NepaliDate): Array<NepaliDate | null> => {
-  const firstDay = month.getDay()
+export const getMonthDays = (date: NepaliDate): Array<NepaliDate | null> => {
+  const firstDay = date.getDay()
+  const year = date.getYear()
+  const month = date.getMonth()
+
   const array = []
 
   for (let i = 0; i < firstDay; i++) {
     array.push(null)
   }
 
-  const daysInMonth = dateConfigMap[month.getYear()][NEPALI_MONTHS[month.getMonth()]]
-
-  let startDay = startOfMonth(month.toJsDate())
+  const daysInMonth = dateConfigMap[year][NEPALI_MONTHS[month]]
 
   for (let i = firstDay; i < daysInMonth + firstDay; i++) {
-    array.push(NepaliDate.fromAD(startDay))
-    startDay = add(startDay, { days: 1 })
+    array.push(new NepaliDate(year, month, i - firstDay + 1))
   }
 
   while (array.length % daysInWeek) {
