@@ -1,16 +1,16 @@
 import React, { useCallback, useState } from 'react'
-import { FlatList, StyleSheet, View, ListRenderItem } from 'react-native'
-import { Header } from './components/Header'
 import NepaliDate from 'nepali-date-converter'
-import { CalendarContext } from './contexts/CalendarContext'
-import { PlaceholderCell } from './components/PlaceholderCell'
-import { DateCell } from './components/DateCell'
-import { DaysRow } from './components/DaysRow'
-import { YearMonthPicker } from './components/YearMonthPicker'
-import { getMonthDays } from './utils/nepaliDate'
+import { FlatList, ListRenderItem, StyleSheet, View } from 'react-native'
+import { DateCell } from './DateCell'
+import { PlaceholderCell } from './PlaceholderCell'
+import { getMonthDays } from '../utils/nepaliDate'
+import { CalendarContext } from '../contexts/CalendarContext'
+import { Header } from './Header'
+import { DaysRow } from './DaysRow'
 import { daysInWeek } from 'date-fns/constants'
+import { YearMonthPicker } from './YearMonthPicker'
 
-type CalendarViewProps = {
+export type CalendarProps = {
   defaultDate?: NepaliDate
   onDayLongPress?: (date: NepaliDate) => void
   locale?: typeof NepaliDate.language
@@ -18,13 +18,13 @@ type CalendarViewProps = {
   onDateChange?: (date: NepaliDate) => void
 }
 
-const CalendarView = ({
+export const Calendar = ({
   defaultDate,
   locale = 'en',
   onMonthChange: onMonthChangeProp,
   onDateChange: onDateChangeProp,
   onDayLongPress,
-}: CalendarViewProps) => {
+}: CalendarProps) => {
   const [selectedDate, setSelectedDate] = useState(defaultDate ?? NepaliDate.fromAD(new Date()))
   const [selectedMonth, setSelectedMonth] = useState(selectedDate)
   const [dates, setDates] = useState<(NepaliDate | null)[]>([])
@@ -97,5 +97,3 @@ const styles = StyleSheet.create({
   container: { backgroundColor: '#fff' },
   listColumnWrapper: { justifyContent: 'space-between' },
 })
-
-export default CalendarView
